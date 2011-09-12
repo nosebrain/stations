@@ -5,7 +5,6 @@
  code generator otherwise the changes will be lost.
  */
 var localizedStrings = {
-    "arrival": "arrivial"
+    "arrival": "Ankunft"
 };
-
 

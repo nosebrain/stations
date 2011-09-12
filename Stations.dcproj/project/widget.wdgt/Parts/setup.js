@@ -5,12 +5,15 @@
  code generator otherwise the changes will be lost.
  */
 var dashcodePartSpecs = {
+    "dateLabel": { "text": "01:01", "view": "DC.Text" },
     "done": { "creationFunction": "CreateGlassButton", "onclick": "showFront", "text": "Done" },
     "info": { "backgroundStyle": "black", "creationFunction": "CreateInfoButton", "foregroundStyle": "white", "frontID": "front", "onclick": "showBack" },
+    "refreshButton": { "view": "DC.ImageLayout" },
     "scrollArea": { "autoHideScrollbars": true, "creationFunction": "CreateScrollArea", "hasVerticalScrollbar": true, "scrollbarDivSize": 18, "scrollbarMargin": 6, "spacing": 4 },
     "searchResultScrollArea": { "autoHideScrollbars": true, "creationFunction": "CreateScrollArea", "hasVerticalScrollbar": true, "scrollbarDivSize": 18, "scrollbarMargin": 6, "spacing": 4 },
     "stationLabel": { "text": "Station", "view": "DC.Text" }
 };
+
 
 
 

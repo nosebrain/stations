@@ -49,10 +49,10 @@ body {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    width: 282px;
-    left: 16px;
     top: 42px;
     height: 198px;
+    left: 22px;
+    width: 270px;
 }
 
 #stationLabel {
@@ -350,4 +350,48 @@ body {
     left: 31px;
     top: 48px;
     width: 278px;
+}
+
+#dateLabel {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Lucida Grande';
+    font-size: 8pt;
+    top: 248px;
+    left: 261px;
+    right: 20px;
+    width: auto;
+    bottom: 3px;
+    height: auto;
+    text-align: right;
+}
+
+.selected #dateLabel {
+    color: white;
+}
+
+#refreshButton {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 18px;
+    left: 276px;
+}
+
+#inner_image {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
 }

@@ -50,7 +50,8 @@ Board.prototype.setLastUpdated = function(date) {
 }
 
 Board.prototype.updatedBoard = function(trains, messages) {
-  this.setLastUpdated(new Date());
+  var now = new Date();
+  this.setLastUpdated(now);
   
   var scrollContent = $('#content');
   scrollContent.empty();
@@ -59,8 +60,8 @@ Board.prototype.updatedBoard = function(trains, messages) {
   
   for (var i = 0; i < messages.length; i++) {
     var message = messages[i];
-    
-    
+    var item = $('<li></li>').addClass('message').text(message);
+    list.append(item);
   }
   for (var i = 0; i < trains.length; i++) {
     var train = trains[i];
@@ -91,6 +92,13 @@ Board.prototype.updatedBoard = function(trains, messages) {
   
   scrollContent.append(list);
   
+  var formatedTime = format(now.getHours()) + ":" + format(now.getMinutes());
+  
+  $('#dateLabel').text(formatedTime);
+  
+  // stop and reactivate refresh button
+  $('#refreshButton').css('-webkit-transform', 'none');
+  
   document.getElementById('scrollArea').object.refresh();
 }
 
@@ -109,6 +117,22 @@ Board.prototype.load = function() {
     // init bindings
     $('#refreshButton').click(function() {
       board.refresh();
+      
+      /* $(this).animate({
+        textIndent: 0
+      }, {
+        step: function(now,fx) {
+          $(this).css('-webkit-transform', 'rotate(' + now + 'deg)'); 
+        },
+      duration:'slow'
+      }, 'linear'); */
+      
+      var degrees = 5000 * 360;
+      var miliseconds = 5000000;
+      $(this).css({
+        "-webkit-transform" : "rotate(" + degrees + "deg)",
+        "-webkit-transition-duration" : miliseconds + "ms"
+      });
     });
 }
 
@@ -124,8 +148,9 @@ Board.prototype.loadSettings = function() {
     // Wabern: 8000368
     // Stu: 8000096
     // Berlin: 8011160
-    // 8000260
-    stationId = 713384;
+    // Würzburg 8000260
+    // KS Uni Ing Schule 713384
+    stationId = 8011160;
   }
   
   alert(stationId + " " + stationName);
