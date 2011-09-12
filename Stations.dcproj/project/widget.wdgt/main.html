@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleAnimator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleButton.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleInfoButton.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/stations.css">
+    <script type="text/javascript" src="Parts/parts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="localizedStrings.js" charset="utf-8"></script>
+    <!-- frameworks -->
+    <script type="text/javascript" src="lib/jquery/jquery.js" charset="utf-8"></script>
+    <!-- utils -->
+    <script type="text/javascript" src="js/utils/WidgetUtils.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/utils/TrainUtils.js" charset="utf-8"></script>
+    <!-- model -->
+    <script type="text/javascript" src="js/model/Station.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/model/Train.js" charset="utf-8"></script>
+    <!-- helper -->
+    <script type="text/javascript" src="js/StationUpdater.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/Board.js" charset="utf-8"></script>
+    <script type="text/javascript" src="main.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleScrollbar.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleScrollArea.js" charset="utf-8"></script>
+</head>
+<body onload="load();" apple-part="com.apple.Dashcode.part.StackLayout">
+    <div id="front">
+        <div id="widget" apple-part="com.apple.Dashcode.part.box">
+            <div id="stationLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+            <div id="scrollArea" apple-part="com.apple.Dashcode.part.scrollarea" apple-group="scrollArea">
+                <div id="content" class="content" apple-group="scrollArea" style="position: absolute; left: 0px; top: 0px; right: 22px; bottom: 0px; overflow-x: hidden; overflow-y: hidden; "></div></div>
+            <div class="apple-no-children" id="info" apple-part="com.apple.Dashcode.part.infobutton" apple-default-image-visibility="hidden"></div>
+        </div>
+    </div>
+    <div id="back">
+        <img id="backImg" src="Parts/Images/back.png" alt="" apple-locked="true" apple-part="com.apple.Dashcode.part.backimage" apple-style=" image-radius: 12,12,12,12; image-border: 1; image-border-color: 0.1500,0.1500,0.1500; image-border-width: 3; shadow-include-shadow: 1; shadow-blur: 9.00; shadow-offset: -1.00,-6.00; shadow-color: 0.0000,0.0000,0.0000,0.3333;">
+        <div id="done" class="apple-no-children" apple-part="com.apple.Dashcode.part.glassbutton"></div>
+        <input id="search" type="search" value="" placeholder="" results="10" incremental="incremental" class="apple-textfield apple-no-children" apple-part="com.apple.Dashcode.part.searchfield">
+        <div id="products" apple-part="com.apple.Dashcode.part.box">
+            <div id="ice" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox">
+                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox">
+                <div id="div">ICE</div>
+            </div>
+            <div id="icec" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox1">
+                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input1" apple-group="checkbox1">
+                <div id="div1">IC / EC</div>
+            </div>
+            <div id="irexpress" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox2">
+                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input2" apple-group="checkbox2">
+                <div id="div2">IR / Schnellzüge</div>
+            </div>
+            <div id="regio" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox3">
+                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input3" apple-group="checkbox3">
+                <div id="div3">Nahverkehr</div>
+            </div>
+            <div id="sbahn" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox4">
+                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input4" apple-group="checkbox4">
+                <div id="div4">S-Bahn</div>
+            </div>
+            <div id="bus" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox5">
+                <input type="checkbox" name="Checkbox" apple-part="com.apple.Dashcode.part.input" id="input5" apple-group="checkbox5">
+                <div id="div5">Busse</div>
+            </div>
+            <div id="ship" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox6">
+                <input type="checkbox" name="Checkbox" apple-part="com.apple.Dashcode.part.input" id="input6" apple-group="checkbox6">
+                <div id="div6">Schiffe</div>
+            </div>
+            <div id="subways" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox7">
+                <input type="checkbox" name="Checkbox" apple-part="com.apple.Dashcode.part.input" id="input7" apple-group="checkbox7">
+                <div id="div7">U-Bahnen</div>
+            </div>
+            <div id="trams" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox8">
+                <input type="checkbox" name="Checkbox" apple-part="com.apple.Dashcode.part.input" id="input8" apple-group="checkbox8" value="">
+                <div id="div8">Straßenbahnen</div>
+            </div>
+            <div id="ast" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox9">
+                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input9" apple-group="checkbox9">
+                <div id="div9">AST</div>
+            </div>
+        </div>
+        <div id="searchResultScrollArea" apple-part="com.apple.Dashcode.part.scrollarea" apple-group="scrollArea1">
+            <div id="content1" class="content" apple-group="scrollArea1" style="position: absolute; left: 0px; top: 0px; right: 22px; bottom: 0px; overflow-x: hidden; overflow-y: hidden; "></div></div>
+    </div>
+</body>
+</html>
