@@ -5,11 +5,10 @@ var DEP_TYPE = 'Dep';
 var ARR_TYPE = 'Arr';
 
 function Board() {
-    this.trains = new Array();
-    this.messages = new Array();
-    this.type = DEP_TYPE;
-    
-    this.filter = new Array(1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
+  this.refreshing = false;
+
+  this.type = DEP_TYPE;    
+  this.filter = new Array(1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
 }
 
 Board.prototype.getFilter = function() {
@@ -50,6 +49,7 @@ Board.prototype.setLastUpdated = function(date) {
 }
 
 Board.prototype.updatedBoard = function(trains, messages) {
+  this.refreshing = false;
   var now = new Date();
   this.setLastUpdated(now);
   
@@ -58,11 +58,14 @@ Board.prototype.updatedBoard = function(trains, messages) {
   
   var list = $('<ul></ul>');
   
+  // first general messages
   for (var i = 0; i < messages.length; i++) {
     var message = messages[i];
     var item = $('<li></li>').addClass('message').text(message);
     list.append(item);
   }
+  
+  // trains
   for (var i = 0; i < trains.length; i++) {
     var train = trains[i];
     var item = $('<li></li>');
@@ -96,9 +99,6 @@ Board.prototype.updatedBoard = function(trains, messages) {
   
   $('#dateLabel').text(formatedTime);
   
-  // stop and reactivate refresh button
-  $('#refreshButton').css('-webkit-transform', 'none');
-  
   document.getElementById('scrollArea').object.refresh();
 }
 
@@ -112,27 +112,11 @@ Board.prototype.load = function() {
      * init bindings
      */
     
-    var board = this;
-    
+    var board = this;    
+
     // init bindings
     $('#refreshButton').click(function() {
       board.refresh();
-      
-      /* $(this).animate({
-        textIndent: 0
-      }, {
-        step: function(now,fx) {
-          $(this).css('-webkit-transform', 'rotate(' + now + 'deg)'); 
-        },
-      duration:'slow'
-      }, 'linear'); */
-      
-      var degrees = 5000 * 360;
-      var miliseconds = 5000000;
-      $(this).css({
-        "-webkit-transform" : "rotate(" + degrees + "deg)",
-        "-webkit-transition-duration" : miliseconds + "ms"
-      });
     });
 }
 
@@ -170,5 +154,22 @@ Board.prototype.loadSettings = function() {
 }
 
 Board.prototype.refresh = function() {
+  this.refreshing = true;
   this.updater.update(this);
+  var board = this;
+  var i = 0;
+  // Resizing code
+  var animation = new AppleAnimation(0, 360 * 3000 * 1000, function(rectAnimation, currentValue, startingValue, finishingValue) {
+    if (!board.refreshing && i == 0) {
+      rectAnimation.stop();
+      return;
+    }
+    
+    i += 30;
+    i %= 360;
+    $('#refreshButton').css("-webkit-transform", "rotate(" + i + "deg)");
+  });
+  var currentAnimator = new AppleAnimator(1000 * 1000, 100);
+  currentAnimator.addAnimation(animation);
+  currentAnimator.start();
 }

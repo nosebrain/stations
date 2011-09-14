@@ -49,10 +49,10 @@ body {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    top: 42px;
     height: 198px;
-    left: 22px;
     width: 270px;
+    left: 22px;
+    top: 42px;
 }
 
 #stationLabel {
@@ -68,7 +68,7 @@ body {
     font-family: 'Lucida Grande';
     font-size: 11pt;
     top: 15px;
-    right: 39px;
+    right: 53px;
     width: auto;
     bottom: 236px;
     height: auto;
@@ -372,18 +372,39 @@ body {
     color: white;
 }
 
+#nothing {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    text-align: center;
+    left: 49px;
+    top: 79px;
+    right: 72px;
+    width: auto;
+    bottom: 67px;
+    height: auto;
+    visibility: hidden;
+}
+
+.selected #nothing {
+    color: white;
+}
+
 #refreshButton {
-    width: 16px;
-    height: 16px;
     position: absolute;
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    top: 18px;
-    left: 276px;
+    width: 47px;
+    height: 46px;
+    top: 2px;
+    left: 261px;
 }
 
-#inner_image {
+#inner_image1 {
     position: absolute;
     bottom: 0px;
     right: 0px;
