@@ -14,11 +14,16 @@
     <!-- utils -->
     <script type="text/javascript" src="js/utils/WidgetUtils.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/utils/TrainUtils.js" charset="utf-8"></script>
+    <!-- updater -->
+    <script type="text/javascript" src="js/utils/update/UpdateFramework.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/utils/update/BitBucketUpdater.js" charset="utf-8"></script>
     <!-- model -->
     <script type="text/javascript" src="js/model/Station.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/model/Train.js" charset="utf-8"></script>
     <!-- helper -->
     <script type="text/javascript" src="js/StationUpdater.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/StationSearcher.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/StationSearchResultController.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/Board.js" charset="utf-8"></script>
     <script type="text/javascript" src="main.js" charset="utf-8"></script>
     <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleScrollbar.js" charset="utf-8"></script>
@@ -83,7 +88,15 @@
             </div>
         </div>
         <div id="searchResultScrollArea" apple-part="com.apple.Dashcode.part.scrollarea" apple-group="scrollArea1">
-            <div id="content1" class="content" apple-group="scrollArea1" style="position: absolute; left: 0px; top: 0px; right: 22px; bottom: 0px; overflow-x: hidden; overflow-y: hidden; "></div></div>
+            <div id="content1" class="content" apple-group="scrollArea1" style="position: absolute; left: 0px; top: 0px; right: 22px; bottom: 0px; overflow-x: hidden; overflow-y: hidden; ">
+                <ul id="list" apple-part="com.apple.Dashcode.part.widgetList" class="">
+                    <li id="listRowTemplate" apple-template="true" class="listRowTemplate_template first" style="">
+                        <div id="rowLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children rowLabel_template" apple-text-overflow="ellipsis"></div>
+                    </li>
+                </ul>
+            </div></div>
+        <div id="searchStatus" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+        <div id="departureArrival" apple-part="com.apple.Dashcode.part.roundedpopupbutton" class="apple-no-children" apple-style="image-theme: 1; image-shape: 3; image-button-type: 1; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;"></div>
     </div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 var STATION_ID_PREF_KEY = 'stationId';
 var STATION_NAME_PREF_KEY = 'stationName';
+var BOARD_TYPE_PREF_KEY = 'boardType';
+var FILTER_PREF_KEY = 'filter';
 
 var DEP_TYPE = 'Dep';
 var ARR_TYPE = 'Arr';
@@ -8,11 +10,46 @@ function Board() {
   this.refreshing = false;
 
   this.type = DEP_TYPE;    
-  this.filter = new Array(1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
+  this.filter = new Array(1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+}
+
+Board.prototype.remove = function() {
+  // TODO: refactor
+  savePref(STATION_ID_PREF_KEY, null);
+  savePref(STATION_NAME_PREF_KEY, null);
+  savePref(BOARD_TYPE_PREF_KEY, null);
+  savePref(FILTER_PREF_KEY, null);
+}
+
+Board.prototype.show = function() {
+  this.refresh();
+  this.widgetUpdater.checkForUpdates();
+}
+
+Board.prototype.updateFilter = function(position, newValue) {
+  // TODO: range check
+  this.filter[position] = newValue;
+  
+  savePref(FILTER_PREF_KEY, this.filter.join(''));
+  
+  this.refresh();
 }
 
 Board.prototype.getFilter = function() {
   return this.filter;
+}
+
+Board.prototype.setFilter = function(filter) {
+  this.filter = filter;
+  
+  // TODO: why only 10 filters?
+  $('#products input').each(function(index, input) {
+    if (filter[index] == 1) {
+      $(input).attr('checked', 'checked');
+    } else {
+      $(input).removeAttr('checked');
+    }
+  });
 }
 
 Board.prototype.getType = function() {
@@ -31,7 +68,11 @@ Board.prototype.setStation = function(station) {
   if (this.station) {
     var stationName = this.station.getName();
     $('#stationLabel').text(stationName);
-    $('#stationSearch').val(stationName);
+    $('#search').val(stationName);
+    
+    savePref(STATION_ID_PREF_KEY, station.getId());
+    savePref(STATION_NAME_PREF_KEY, station.getName());
+    
     this.refresh();
   }
 }
@@ -104,6 +145,9 @@ Board.prototype.updatedBoard = function(trains, messages) {
 
 Board.prototype.load = function() {
     this.updater = new StationUpdater();
+    this.searcher = new StationSearcher();
+    var bitbucket = new BitBucketUpdater('nosebrain', 'testrepo');
+    this.widgetUpdater = new UpdateFramework(bitbucket, '#update');
     
     this.loadSettings();
     
@@ -112,11 +156,48 @@ Board.prototype.load = function() {
      * init bindings
      */
     
-    var board = this;    
+    var board = this;
+    
+    $('#products input').change(function() {
+      var checkbox = $(this);
+      // XXX: position == position in product array
+      var position = checkbox.parent().index();
+      var set = checkbox.is(':checked') ? 1 : 0;
+      board.updateFilter(position, set);
+    });
 
     // init bindings
     $('#refreshButton').click(function() {
       board.refresh();
+    });
+    
+    $('#search').bind('keypress', function(e) {
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 13) {
+        var scrollarea = $('#searchResultScrollArea');
+        scrollarea.hide();
+        $('#searchStatus').show().text('Suche Haltestelle …'); // TODO: i18n
+        var search = $(this).val();
+        board.searcher.search(search, function(stations) {
+          if (stations.length == 1) {
+            var station = stations[0];
+            board.setStation(station);
+            // TODO: i18n
+            $('#searchStatus').show().text('Die Suche ergab nur einen Treffer, daher wurde die Haltestelle ' + station.getName() + ' automatisch ausgewählt.');
+            
+            setTimeout(function() {
+              // TODO: i18n
+              $('#searchStatus').show().text('Suchen Sie eine Haltestelle und wählen Sie aus der erscheindenden Liste.');
+            }, 4000);
+            return;
+          }
+          
+          $('#searchStatus').hide();
+          var controller = new StationSearchResultController(this, scrollarea, stations, board);
+          // TODO: jquery
+          document.getElementById('list').object.setDataSource(controller);
+        });
+      }
     });
 }
 
@@ -143,9 +224,15 @@ Board.prototype.loadSettings = function() {
   station.setName(stationName);
   station.setId(stationId);
   
-  var boardType = getPref('boardType');
+  var boardType = getPref(BOARD_TYPE_PREF_KEY);
   if (boardType === undefined) {
     boardType = DEP_TYPE;
+  }
+  
+  var filterStr = getPref(FILTER_PREF_KEY);
+  if (filterStr !== undefined) {
+    var filter = filterStr.split('');
+    this.setFilter(filter);
   }
   
   // don't use setter => causing refresh
@@ -154,6 +241,11 @@ Board.prototype.loadSettings = function() {
 }
 
 Board.prototype.refresh = function() {
+  if (this.refreshing) {
+    alert('board currently refreshing');
+    return;
+  }
+  
   this.refreshing = true;
   this.updater.update(this);
   var board = this;

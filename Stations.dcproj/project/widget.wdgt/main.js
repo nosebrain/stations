@@ -6,21 +6,20 @@
 
 var BOARD = new Board();
 
-
 function load() {
   dashcode.setupParts();
   BOARD.load();
 }
 
 function remove() {
-  // TODO: remove pref 
+  BOARD.remove();
 }
 
 function hide() {
 }
 
 function show() {
-  BOARD.refresh();
+  BOARD.show();
 }
 
 function sync() {
@@ -55,6 +54,7 @@ function showFront(event) {
 
   if (window.widget) {
       setTimeout('widget.performTransition();', 0);
+      document.getElementById('scrollArea').object.refresh();
   }
 }
 
