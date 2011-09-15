@@ -7,11 +7,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>Untitled</string>
+	<string>Stations</string>
 	<key>CFBundleIdentifier</key>
 	<string>de.nosebrain.widget.Stations</string>
 	<key>CFBundleName</key>
-	<string>Untitled</string>
+	<string>Stations</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.0.9</string>
 	<key>CFBundleVersion</key>

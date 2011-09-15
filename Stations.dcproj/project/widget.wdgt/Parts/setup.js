@@ -16,8 +16,10 @@ var dashcodePartSpecs = {
     "scrollArea": { "autoHideScrollbars": true, "creationFunction": "CreateScrollArea", "hasVerticalScrollbar": true, "scrollbarDivSize": 18, "scrollbarMargin": 6, "spacing": 4 },
     "searchResultScrollArea": { "autoHideScrollbars": true, "creationFunction": "CreateScrollArea", "hasVerticalScrollbar": true, "scrollbarDivSize": 18, "scrollbarMargin": 6, "spacing": 4 },
     "searchStatus": { "text": "Suchen Sie eine Haltestelle und wählen Sie aus der erscheindenden Liste.", "view": "DC.Text" },
-    "stationLabel": { "text": "Station", "view": "DC.Text" }
+    "stationLabel": { "text": "Station", "view": "DC.Text" },
+    "update": { "text": "Aktualisierung verfügbar.", "view": "DC.Text" }
 };
+
 
 
 

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleAnimator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleButton.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleInfoButton.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/stations.css">
+    <script type="text/javascript" src="Parts/parts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="localizedStrings.js" charset="utf-8"></script>
+    <!-- frameworks -->
+    <script type="text/javascript" src="lib/jquery/jquery.js" charset="utf-8"></script>
+    <!-- utils -->
+    <script type="text/javascript" src="js/utils/WidgetUtils.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/utils/TrainUtils.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/utils/InfoPlistReader.js" charset="utf-8"></script>
+    <!-- updater -->
+    <script type="text/javascript" src="js/utils/update/UpdateFramework.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/utils/update/BitBucketUpdater.js" charset="utf-8"></script>
+    <!-- model -->
+    <script type="text/javascript" src="js/model/Station.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/model/Train.js" charset="utf-8"></script>
+    <!-- helper -->
+    <script type="text/javascript" src="js/StationUpdater.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/StationSearcher.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/StationSearchResultController.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/Board.js" charset="utf-8"></script>
+    <script type="text/javascript" src="main.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleScrollbar.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file:///System/Library/WidgetResources/AppleClasses/AppleScrollArea.js" charset="utf-8"></script>
+</head>
+<body onload="load();">
+    <div id="front">
+        <div id="widget">
+            <div id="stationLabel"></div>
+            <div id="nothing"></div>
+            <div id="scrollArea">
+                <div id="content" class="content" style="position: absolute; left: 0px; top: 0px; right: 22px; bottom: 0px; overflow-x: hidden; overflow-y: hidden; "></div></div>
+            <div id="info"></div>
+            <div id="dateLabel"></div>
+            <div id="refreshButton"><img src="Images/refreshButton.png" id="inner_image1"></div>
+            <div id="update"></div>
+        </div>
+    </div>
+    <div id="back">
+        <img id="backImg" src="Parts/Images/back.png" alt="">
+        <div id="done"></div>
+        <input id="search" type="search" value="" placeholder="" results="10" incremental="incremental">
+        <div id="products">
+            <div id="ice">
+                <input type="checkbox" name="Checkbox" checked="checked" id="input">
+                <div id="div">ICE</div>
+            </div>
+            <div id="icec">
+                <input type="checkbox" name="Checkbox" checked="checked" id="input1">
+                <div id="div1">IC / EC</div>
+            </div>
+            <div id="irexpress">
+                <input type="checkbox" name="Checkbox" checked="checked" id="input2">
+                <div id="div2">IR / Schnellzüge</div>
+            </div>
+            <div id="regio">
+                <input type="checkbox" name="Checkbox" checked="checked" id="input3">
+                <div id="div3">Nahverkehr</div>
+            </div>
+            <div id="sbahn">
+                <input type="checkbox" name="Checkbox" checked="checked" id="input4">
+                <div id="div4">S-Bahn</div>
+            </div>
+            <div id="bus">
+                <input type="checkbox" name="Checkbox" id="input5">
+                <div id="div5">Busse</div>
+            </div>
+            <div id="ship">
+                <input type="checkbox" name="Checkbox" id="input6">
+                <div id="div6">Schiffe</div>
+            </div>
+            <div id="subways">
+                <input type="checkbox" name="Checkbox" id="input7">
+                <div id="div7">U-Bahnen</div>
+            </div>
+            <div id="trams">
+                <input type="checkbox" name="Checkbox" id="input8" value="">
+                <div id="div8">Straßenbahnen</div>
+            </div>
+            <div id="ast">
+                <input type="checkbox" name="Checkbox" id="input9">
+                <div id="div9">AST</div>
+            </div>
+        </div>
+        <div id="searchResultScrollArea">
+            <div id="content1" class="content" style="position: absolute; left: 0px; top: 0px; right: 22px; bottom: 0px; overflow-x: hidden; overflow-y: hidden; ">
+                <ul id="list">
+                    <li id="listRowTemplate" class="listRowTemplate_template first" style="">
+                        <div id="rowLabel" class="rowLabel_template"></div>
+                    </li>
+                </ul>
+            </div></div>
+        <div id="searchStatus"></div>
+        <div id="departureArrival"></div>
+    </div>
+</body>
+</html>
