@@ -1,3 +1,8 @@
+/*
+ * TODO: save beta setting
+ * TODO: config via plist file
+ */
+
 function compareVersionStr(version1Str, version2Str) {
   var version1 = version1Str.split('.');
   var version2 = version2Str.split('.');
@@ -57,11 +62,9 @@ function UpdateFramework(updater, guiElement) {
 UpdateFramework.prototype.retrieveCurrentVersion = function() {
   var reader = new InfoPlistReader();
   this.currentVersion = reader.getValueForKey(VERSION_KEY);
-  alert(this.currentVersion);
 }
 
 UpdateFramework.prototype.setIncludeBetaUpdates = function(includeBetaUpdates) {
-  // TODO: save beta setting
   this.includeBetaUpdates = includeBetaUpdates;
 }
 

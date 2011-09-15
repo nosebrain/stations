@@ -20,9 +20,7 @@ Board.prototype.load = function() {
     this.updater = new StationUpdater();
     this.searcher = new StationSearcher();
     
-    // TODO: config via xml!?
-    var updater = $('#update');
-    updater.hide();
+    var updater = $('#update').hide();
     var bitbucket = new BitBucketUpdater(UPDATE_BITBUCKET_USER, UPDATE_BITBUCKET_REPO);
     this.widgetUpdater = new UpdateFramework(bitbucket, updater);
     
